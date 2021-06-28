@@ -1,0 +1,34 @@
+version: 0.2
+
+phases:
+    install: 
+        runtime-versions:
+            java: corretto8
+            docker: 18
+    pre_build:
+        commands:
+            - echo "Pre_build"
+            - echo Logging in to Amazon ECR
+            - $(aws ecr get-login  --no-include-email --region $AWS_DEFAULT_REGION)
+    build:
+        commands:
+            - echo "Build"
+            - echo "I am a new Build"
+            - echo "Entered build phase"
+            - echo "Building Java"
+            - cd onlinecontactmanger
+            - mvn clean -Dmaven.test.skip=true
+            - docker build -t cont .
+            - docker tag cont 376440775112.dkr.ecr.us-east-2.amazonaws.com/online-contact-manager:cont
+    post_build:
+        commands:
+            - echo "Post_build"
+            - docker push 376440775112.dkr.ecr.us-east-2.amazonaws.com/online-contact-manager:cont
+            - printf '[{"name":"application-container","imageUri":"%s"}]' 376440775112.dkr.ecr.us-east-2.amazonaws.com/online-contact-manager:cont > taskdefinition.json
+            - cat taskdefinition.json
+
+
+artifacts:
+     files: 
+            - onlinecontactmanger/taskdefinition.json
+
