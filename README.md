@@ -1,5 +1,9 @@
 # Online-Contact-Management-Application
-Online Contact Management Application using Spring Boot.
+Online Contact Manager is a Spring Boot applicationcreated with the help of SpringToolSuite4 using MVC stylecoding. The technologies used during the creation are
+1. Spring MVC
+2. SQL workbench (before deployment)
+3. HTML, CSS, JavaScript & JQuery.
+
 
 # Index Page
 ![](images/Screenshot%20(49).png)
